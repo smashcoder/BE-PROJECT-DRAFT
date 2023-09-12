@@ -1,0 +1,39 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Mining Search</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Text Mining Search</h1>
+        <form method="POST">
+            <div class="form-group">
+                <input type="text" class="form-control" name="keyword" placeholder="Enter keyword">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        {% if result_message %}
+        <p class="mt-3">{{ result_message }}</p>
+        {% endif %}
+        {% if result_entries %}
+        <div class="row mt-3">
+            {% for entry in result_entries %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <img src="https://plshroffcollege.com/wp-content/uploads/2020/02/Events-plshroff.jpg" class="card-img-top" alt="Image">
+                        <h5 class="card-title">{{ entry['Event Details'] }}</h5>
+                        <p class="card-text">College: {{ entry['College Name'] }}</p>
+                        <!--<p class="card-text">Date: {{ entry['Date'] }}</p>-->
+                        <!-- Add more fields as needed -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
