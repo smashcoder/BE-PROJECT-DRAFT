@@ -1,0 +1,22 @@
+.text-bg-dark {
+    background-color: black;
+    color: white; /* Set text color to white */
+}
+
+/* Push buttons to the right side */
+.text-end {
+    margin-left: auto;
+}
+
+
+.nav li{
+    font-weight: bolder;
+}
+
+.nav a:hover{
+    color: yellow;
+}
+
+.nav li:hover{
+    color: yellow;
+}
