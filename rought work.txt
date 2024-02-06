@@ -1,0 +1,24 @@
+if 'image' in request.files:
+        image = request.files['image']
+
+        # Set the content type of the image to "image/*"
+        content_type = f'image/{image.filename.split(".")[-1]}'
+        blob = bucket.blob(f'images/{event_name}/{image.filename}')
+        blob.upload_from_file(image, content_type=content_type)
+        
+        # Get the publicly accessible URL of the uploaded image
+        image_url = blob.media_link
+        print(f"Image URL: {image_url}")
+
+        # Save the image URL in the Firestore collection along with other event details
+        db.collection('sample-data').add({
+            'Event Name': event_name,
+            'Event Information': event_info,
+            'Venue': venue,
+            'Date': date,
+            'Time': time,
+            'Keywords': keywords,
+            'Organizer': organizer,
+            'Registration Link': registration_link,
+            'Image URL': image_url  # Save the image URL in Firestore
+        })

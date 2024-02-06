@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            margin-left: 10px;
+            /* Add margin from the left */
+            margin-right: 10px;
+            /* Add margin from the right */
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+            /* Text wrap */
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .download-button {
+            margin-bottom: 10px;
+            white-space: normal;
+            /* Text wrap */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#">College Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('index') }}">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('college_dashboard') }}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('add_event') }}">Add Event</a>
+                </li>
+                <!-- Add additional navigation links if needed -->
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>College Dashboard</h1>
+
+        <a href="{{ url_for('college_dashboard', download='true') }}" class="btn btn-primary download-button">Download
+            Excel</a>
+
+        {% if events %}
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Event Name</th>
+                    <th>Event Information</th>
+                    <th>Venue</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Keywords</th>
+                    <th>Organizer</th>
+                    <th>Registration Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>{{ event['Event Name'] }}</td>
+                    <td>{{ event['Event Information'] }}</td>
+                    <td>{{ event['Venue'] }}</td>
+                    <td>{{ event['Date'] }}</td>
+                    <td>{{ event['Time'] }}</td>
+                    <td>{{ event['Keywords'] }}</td>
+                    <td>{{ event['Organizer'] }}</td>
+                    <td>{{ event['Registration Link'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No events registered under the college.</p>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/form.css') }}">
+</head>
+<body>
+    <h2>Login</h2>
+    <form method="POST" action="/login">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+        <br>
+
+        <!-- Add a div for the password input with a dynamic display style -->
+        <div id="password-section" style="display: none;">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+            <br>
+        </div>
+
+        <input type="submit" value="Login">
+    </form>
+    <p>Don't have an account? <a href="/register">Register</a></p>
+
+    <!-- Include script to toggle password input visibility based on email input -->
+    <script>
+        document.getElementById("email").addEventListener("input", function() {
+            // Get the email input value
+            var emailInput = this.value.trim();
+
+            // Get the password section div
+            var passwordSection = document.getElementById("password-section");
+
+            // Toggle the display of the password input based on email input
+            passwordSection.style.display = emailInput ? "block" : "none";
+        });
+    </script>
+</body>
+</html>

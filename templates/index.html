@@ -1,66 +1,87 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Text Mining Search</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Event Finder</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Additional styles go here -->
 </head>
+
 <body>
-    <header class="p-3 text-bg-dark">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-between justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-black text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                        <use xlink:href="#bootstrap"></use>
-                    </svg>
-                </a>
-    
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" class="nav-link px-2 text-light">Home</a></li>
-                    <li><a href="#" class="nav-link px-2 text-light">Features</a></li>
-                    <li><a href="#" class="nav-link px-2 text-light">Pricing</a></li>
-                    <li><a href="#" class="nav-link px-2 text-light">FAQs</a></li>
-                    <li><a href="#" class="nav-link px-2 text-light">About</a></li>
-                </ul>
-    
-                <div class="text-end">
-                    <button type="button" class="btn btn-outline-light me-2">Login</button>
-                    <button type="button" class="btn btn-warning">Sign-up</button>
-                </div>
-            </div>
+    <!-- Replace your existing navigation bar with the following Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Event Finder</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="#">Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Organizations</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+            </ul>
+            {% if is_logged_in %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('add_event') }}">Add Event</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('college_dashboard') }}">Dashboard</a></li>
+            </ul>
+            {% else %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+            {% endif %}
         </div>
-    </header>
+    </nav>
+
+
+    <div class="container mt-4">
+        <input type="text" class="form-control mb-3" id="searchInput" placeholder="Search For Events">
     
-    <div class="container mt-5">
-        <!--<h1>Text Mining Search</h1>-->
-        <form method="POST">
-            <div class="form-group">
-                <input type="text" class="form-control" name="keyword" placeholder="Enter keyword">
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
-        {% if result_message %}
-        <p class="mt-3">{{ result_message }}</p>
-        {% endif %}
-        {% if result_entries %}
-        <div class="row mt-3">
-            {% for entry in result_entries %}
-            <div class="col-md-4">
-                <div class="card mb-4">
+        <div class="row" id="cardContainer">
+            {% for user in users %}
+            <div class="col-md-4 card">
+                <div class="cards">
+                    <img src="{{ user['Image URL'] }}" alt="{{ user['Event Name'] }}" class="card-img-top">
                     <div class="card-body">
-                        <img src="https://plshroffcollege.com/wp-content/uploads/2020/02/Events-plshroff.jpg" class="card-img-top" alt="Image">
-                        <h5 class="card-title">{{ entry['Event Details'] }}</h5>
-                        <p class="card-text">College: {{ entry['College Name'] }}</p>
-                        <a href="https://www.google.com/" class="btn btn-primary">Go somewhere</a>
-                        <!--<p class="card-text">Date: {{ entry['Date'] }}</p>-->
-                        <!-- Add more fields as needed -->
+                        <h5 class="card-title">{{ user['Event Name'] }}</h5>
+                        <p class="card-text">{{ user['Event Information'] }}</p>
+                        <p style="display: none;" class="keywords">{{ user['Keywords'] }}</p>
+                        <button class="btn btn-primary card-button" onclick='openModal("{{ user["Event Name"] }}", "{{ user["Event Information"] }}", "{{ user["Keywords"] }}")'>Info</button>
+                        <a href="{{ url_for('registration') }}" class="btn btn-success card-button">Register</a>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
-        {% endif %}
+    
+        <p id="noResultsMessage" style="display: none;">No results found.</p>
     </div>
+
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Event Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3 id="modalEventName"></h3>
+                    <p id="modalEventInfo"></p>
+                    <p id="modalKeywords"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
+
 </html>

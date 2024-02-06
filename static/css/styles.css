@@ -1,22 +1,166 @@
-.text-bg-dark {
-    background-color: black;
-    color: white; /* Set text color to white */
+/* styles.css */
+
+/* Navigation bar styles */
+.navbar {
+    background-color: #000000;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 999; /* Ensure the navigation bar stays on top */
 }
 
-/* Push buttons to the right side */
-.text-end {
-    margin-left: auto;
+body {
+    padding-top: 60px; /* Adjust as needed based on the navbar height */
 }
 
-
-.nav li{
-    font-weight: bolder;
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
-.nav a:hover{
-    color: yellow;
+.navbar li {
+    float: left;
+    margin-top: 5px;
 }
 
-.nav li:hover{
-    color: yellow;
+.navbar a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Button styles */
+.button {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline */
+}
+
+#loginButton, #addEventButton {
+    float: right;
+    margin-right: 20px;
+    background-color: #007bff;
+    color: white;
+    border: 2px solid #007bff;
+}
+
+#loginButton:hover, #addEventButton:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+#logoutButton {
+    float: right;
+    margin-right: 0;
+    background-color: #007bff;
+    color: white;
+    border: 2px solid #007bff;
+}
+
+#logoutButton:hover {
+    background-color: rgb(152, 0, 0);
+    border-color: rgb(152, 0, 0);
+}
+
+/* Dropdowns styles */
+.dropdowns {
+    text-align: center;
+    margin: 50px auto 10px auto; /* Adjust margin as needed */
+}
+
+#stateDropdown, #cityDropdown {
+    width: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+/* Card styles */
+.card-container {
+    text-align: center;
+    margin: 80px auto 10px auto; /* Adjust margin to make space below the fixed navigation bar */
+    display: flex;
+    flex-wrap: wrap; /* Ensure cards wrap to the next row */
+    justify-content: center; /* Center cards horizontally */
+}
+
+.card {
+    width: 300px;
+    display: inline-block; /* Display cards in a row */
+}
+
+.cards{
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+
+.card-image {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.card-button {
+    flex: 1;
+    margin-right: 5px;
+    padding: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.card-button:last-child {
+    margin-right: 0;
+}
+
+.card-button:hover {
+    background-color: #0056b3;
+}
+
+/* Search input styles */
+#searchInput {
+    width: 60%;
+    padding: 10px;
+    margin: 0px auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: block;
+    text-overflow: ellipsis; /* Prevent text overflow with ellipsis */
+    overflow: hidden; /* Hide overflowing text */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.container {
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: none;
+    box-shadow: none;
+}
+
+.card {
+    border: none; /* Remove border */
 }

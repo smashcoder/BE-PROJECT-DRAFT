@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Data</title>
+</head>
+<body>
+    <h2>User Data</h2>
+    <input type="text" id="searchInput" placeholder="Search by name or mobile number">
+    <table id="userData">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Mobile Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.mobile }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <p id="noResultsMessage" style="display: none;">No results found.</p>
+
+    <script>
+        // JavaScript for filtering data
+        const searchInput = document.getElementById('searchInput');
+        const userData = document.getElementById('userData').getElementsByTagName('tbody')[0];
+        const noResultsMessage = document.getElementById('noResultsMessage');
+
+        searchInput.addEventListener('input', function () {
+            const searchValue = searchInput.value.toLowerCase();
+            let found = false;
+
+            for (let i = 0; i < userData.rows.length; i++) {
+                const name = userData.rows[i].cells[0].textContent.toLowerCase();
+                const mobile = userData.rows[i].cells[1].textContent.toLowerCase();
+
+                if (name.includes(searchValue) || mobile.includes(searchValue)) {
+                    userData.rows[i].style.display = '';
+                    found = true;
+                } else {
+                    userData.rows[i].style.display = 'none';
+                }
+            }
+
+            // Show/hide "No results found" message
+            if (found) {
+                noResultsMessage.style.display = 'none';
+            } else {
+                noResultsMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
